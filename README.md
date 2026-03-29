@@ -6,12 +6,34 @@ A lightweight, chainable DOM manipulation library for modern JavaScript applicat
 
 ## Installation
 
-### ES Module (Recommended)
+### CDN (Recommended for Quick Start)
+
+#### jsDelivr
+```html
+<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.1/el.js"></script>
+```
+
+#### unpkg
+```html
+<script src="https://unpkg.com/@slice-code/el.js@1.0.1/el.js"></script>
+```
+
+#### ESM via CDN
+```javascript
+import el from 'https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.1/el.js';
+```
+
+### NPM
+```bash
+npm install @slice-code/el.js
+```
+
+### ES Module
 ```javascript
 import el from './el.js';
 ```
 
-### Script Tag
+### Script Tag (Local)
 ```html
 <script src="./el.js"></script>
 <script>
