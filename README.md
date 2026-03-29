@@ -10,17 +10,17 @@ A lightweight, chainable DOM manipulation library for modern JavaScript applicat
 
 #### jsDelivr
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.5/el.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.6/el.js"></script>
 ```
 
 #### unpkg
 ```html
-<script src="https://unpkg.com/@slice-code/el.js@1.0.5/el.js"></script>
+<script src="https://unpkg.com/@slice-code/el.js@1.0.6/el.js"></script>
 ```
 
 #### ESM via CDN
 ```javascript
-import 'https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.5/el.js';
+import 'https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.6/el.js';
 ```
 
 ### NPM
@@ -30,7 +30,7 @@ npm install @slice-code/el.js
 
 ### ES Module
 ```javascript
-import el from './el.js';
+import './el.js';
 ```
 
 ### Script Tag (Local)
@@ -45,7 +45,7 @@ import el from './el.js';
 ## Quick Start
 
 ```javascript
-import el from './el.js';
+import './el.js';
 
 // Create a simple element
 const app = el('div')
@@ -471,7 +471,7 @@ el('div').resize((elm) => {
 ## Complete Example
 
 ```javascript
-import el from './el.js';
+import './el.js';
 
 // Build a complete UI
 const app = el('div')
