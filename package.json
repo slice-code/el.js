@@ -1,6 +1,6 @@
 {
   "name": "@slice-code/el.js",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A lightweight, chainable DOM manipulation library for modern JavaScript applications.",
   "homepage": "https://github.com/slice-code/el.js#readme",
   "bugs": {

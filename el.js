@@ -1,6 +1,6 @@
 // library for easy DOM manipulation
 // support by slice-code.com
-// version 1.0.4
+// version 1.0.5
 
 /**
  * el.js - A lightweight DOM manipulation library
