@@ -1,0 +1,43 @@
+{
+  "name": "@slice-code/el.js",
+  "version": "1.0.1",
+  "description": "A lightweight, chainable DOM manipulation library for modern JavaScript applications.",
+  "homepage": "https://github.com/slice-code/el.js#readme",
+  "bugs": {
+    "url": "https://github.com/slice-code/el.js/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slice-code/el.js.git"
+  },
+  "license": "ISC",
+  "author": "gugus darmayanto",
+  "type": "module",
+  "main": "el.js",
+  "module": "el.js",
+  "unpkg": "el.js",
+  "jsdelivr": "el.js",
+  "exports": {
+    ".": {
+      "import": "./el.js",
+      "require": "./el.js",
+      "default": "./el.js"
+    }
+  },
+  "files": [
+    "el.js",
+    "README.md"
+  ],
+  "keywords": [
+    "dom",
+    "javascript",
+    "library",
+    "chainable",
+    "lightweight",
+    "el.js",
+    "slice-code"
+  ],
+  "scripts": {
+    "test": "node index"
+  }
+}
