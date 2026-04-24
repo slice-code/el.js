@@ -243,9 +243,13 @@
       return this;
     }
     obj.click = function (func) {
-      if (func) {
-        this.el.addEventListener('click', func, false);
-      }
+      if (!func) return this;
+
+      const userAgent = typeof navigator !== 'undefined' && navigator.userAgent ? navigator.userAgent.toLowerCase() : '';
+      const isMobile = userAgent.includes('android') || userAgent.includes('iphone') || userAgent.includes('ipad');
+      const eventName = isMobile ? 'touchstart' : 'click';
+
+      this.el.addEventListener(eventName, func, false);
       return this;
     }
     obj.hover = function (enterFunc, leaveFunc) {
