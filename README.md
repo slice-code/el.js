@@ -10,17 +10,17 @@ A lightweight, chainable DOM manipulation library for modern JavaScript applicat
 
 #### jsDelivr
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.2/el.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.3/el.js"></script>
 ```
 
 #### unpkg
 ```html
-<script src="https://unpkg.com/@slice-code/el.js@1.1.2/el.js"></script>
+<script src="https://unpkg.com/@slice-code/el.js@1.1.3/el.js"></script>
 ```
 
 #### ESM via CDN
 ```javascript
-import 'https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.2/el.js';
+import 'https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.3/el.js';
 ```
 
 ### NPM
@@ -35,8 +35,8 @@ import './el.js';
 
 ### Script Tag (Local)
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.2/el.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/slice-code/el.js@1.1.2/admin/layout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.3/el.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/slice-code/el.js@1.1.3/admin/layout.js"></script>
 <script>
   // el is available globally
   const div = el('div').text('Hello World').get();

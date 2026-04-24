@@ -166,6 +166,24 @@
       }
     }
 
+    var pseudoStyleCache = {};
+    var serializeStyle = function (styles) {
+      var keys = Object.keys(styles).sort();
+      return keys.map(function (key) {
+        return toKebabCase(key) + ':' + String(styles[key]);
+      }).join(';');
+    };
+    var getPseudoClassForRule = function (selector, styles) {
+      var cacheKey = selector + '|' + serializeStyle(styles);
+      if (pseudoStyleCache[cacheKey]) {
+        return pseudoStyleCache[cacheKey];
+      }
+      var className = generateUUID('eljs-pseudo');
+      pseudoStyleCache[cacheKey] = className;
+      addCssRule('.' + className + selector, styles);
+      return className;
+    };
+
     var createKeyframesRule = function (name, frames) {
       var sheet = ensureStyleSheet();
       var frameRules = Object.keys(frames).map(function (frameKey) {
@@ -239,10 +257,10 @@
           }
         }, this);
 
-        var className = null;
         if (Object.keys(normalStyles).length > 0) {
-          className = createPseudoClass(this.el);
-          addCssRule('.' + className, normalStyles);
+          Object.keys(normalStyles).forEach(function (key) {
+            this.el.style[toCamelCase(key)] = normalStyles[key];
+          }, this);
         }
 
         specialKeys.forEach(function (item) {
@@ -251,29 +269,27 @@
             this.el.style.animation = buildAnimationValue(value);
             return;
           }
-          if (!className) {
-            className = createPseudoClass(this.el);
-          }
-          var selector;
+          var selectorSuffix;
           if (item === 'hover') {
-            selector = '.' + className + ':hover';
+            selectorSuffix = ':hover';
           } else if (item === 'active') {
-            selector = '.' + className + ':active';
+            selectorSuffix = ':active';
           } else if (item === 'touch') {
-            selector = '.' + className + '.eljs-touch-active';
+            selectorSuffix = '.eljs-touch-active';
             addTouchClassListeners(this.el);
           } else if (item === 'before' || item === ':before') {
-            selector = '.' + className + '::before';
+            selectorSuffix = '::before';
           } else if (item === 'after' || item === ':after') {
-            selector = '.' + className + '::after';
+            selectorSuffix = '::after';
           } else if (item === 'focus') {
-            selector = '.' + className + ':focus';
+            selectorSuffix = ':focus';
           } else if (item.startsWith('&')) {
-            selector = '.' + className + item.slice(1);
+            selectorSuffix = item.slice(1);
           } else {
-            selector = '.' + className + item;
+            selectorSuffix = item;
           }
-          addCssRule(selector, value);
+          var className = getPseudoClassForRule(selectorSuffix, value);
+          this.el.classList.add(className);
         }, this);
 
         return this;
