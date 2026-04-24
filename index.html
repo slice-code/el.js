@@ -5,54 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>el.js - Complete Examples</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        .highlight { background-color: #fbbf24 !important; }
-        #output { white-space: pre-wrap; }
-    </style>
-</head>
+    </head>
 
-<body class="bg-gray-50 min-h-screen">
+<body>
     <div id="app"></div>
     <script type="module">
         import './el.js';
 
+        el(document.body).css({ margin: '0', padding: '0', minHeight: '100vh', background: '#f3f4f6', fontFamily: 'system-ui, -apple-system, BlinkMacSystemFont, \u201CSegoe UI\u201D, sans-serif', color: '#111827' });
+
         // ============================================
         // 1. BASIC ELEMENT CREATION & ATTRIBUTES
         // ============================================
-        const basicSection = el('div').class('bg-white rounded-xl shadow-lg p-6 m-6 border border-gray-100').child([
-            el('h2').class('text-2xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-blue-500 flex items-center gap-2').child([
-                el('i').class('fas fa-cube text-blue-500'),
+        const basicSection = el('div').css({ background: '#ffffff', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.08)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #e5e7eb' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #3b82f6', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-cube').css({ color: '#3b82f6' }),
                 el('span').text('1. Basic Element Creation & Attributes')
             ]),
             
             // Creating different elements
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Various Elements:'),
-                el('div').class('space-y-2').child([
-                    el('p').class('text-gray-600').text('This is a paragraph'),
-                    el('span').class('text-gray-600').text('This is a span '),
-                    el('strong').class('text-gray-800').text('Bold text '),
-                    el('em').class('text-gray-600').text('Italic text'),
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Various Elements:'),
+                el('div').css({ display: 'grid', rowGap: '0.5rem' }).child([
+                    el('p').css({ color: '#4b5563' }).text('This is a paragraph'),
+                    el('span').css({ color: '#4b5563' }).text('This is a span '),
+                    el('strong').css({ color: '#1f2937' }).text('Bold text '),
+                    el('em').css({ color: '#4b5563' }).text('Italic text'),
                     el('br').get(),
                     el('a').href('https://example.com').text('Link to example.com').attr('target', '_blank')
-                        .class('text-blue-600 hover:text-blue-800 underline transition-colors'),
+                        .css({ color: '#2563eb', textDecoration: 'underline', transition: 'color 0.2s ease', hover: { color: '#1d4ed8' } }),
                     el('br').get(),
                     el('img').attr('src', 'https://via.placeholder.com/150').attr('alt', 'Placeholder')
-                        .class('rounded-lg shadow-md mt-2').width('150px').get()
+                        .css({ borderRadius: '0.75rem', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', marginTop: '0.5rem' }).width('150px').get()
                 ])
             ]),
             
             // ID, classes, and attributes
-            el('div').class('bg-gray-50 rounded-lg p-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('ID, Classes & Attributes:'),
-                el('div').id('unique-element').class('bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-200 rounded-lg p-4 mb-3').attr('data-custom', 'value').child(
-                    el('p').class('text-gray-700').text('Element with ID, gradient background, and custom data attribute')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('ID, Classes & Attributes:'),
+                el('div').id('unique-element').css({ background: 'linear-gradient(90deg, #eff6ff 0%, #e0e7ff 100%)', border: '2px solid #bfdbfe', borderRadius: '0.75rem', padding: '1rem', marginBottom: '0.75rem' }).attr('data-custom', 'value').child(
+                    el('p').css({ color: '#374151' }).text('Element with ID, gradient background, and custom data attribute')
                 ),
-                el('button').class('bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg').text('Check Attributes').click(() => {
+                el('button').css({ background: '#2563eb', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', hover: { background: '#1d4ed8', boxShadow: '0 20px 25px rgba(0,0,0,0.15)' } }).text('Check Attributes').click(() => {
                     const elem = document.getElementById('unique-element');
                     logOutput('ID: ' + elem.id + ', data-custom: ' + elem.dataset.custom);
                 })
@@ -62,29 +59,29 @@
         // ============================================
         // 2. STYLING & CSS
         // ============================================
-        const styleSection = el('div').class('bg-white rounded-xl shadow-lg p-6 m-6 border border-gray-100').child([
-            el('h2').class('text-2xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-purple-500 flex items-center gap-2').child([
-                el('i').class('fas fa-palette text-purple-500'),
+        const styleSection = el('div').css({ background: '#ffffff', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.08)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #e5e7eb' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #8b5cf6', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-palette').css({ color: '#8b5cf6' }),
                 el('span').text('2. Styling & CSS')
             ]),
             
             // Individual style methods
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Style Methods:'),
-                el('div').class('flex flex-wrap gap-3').child([
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Style Methods:'),
+                el('div').flex('row').wrap('wrap').gap('0.75rem').child([
                     el('div').text('Width & Height').width('200px').height('50px').background('#3b82f6').color('#fff')
-                        .class('flex items-center justify-center rounded-lg shadow-md font-medium'),
+                        .css({ display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '0.75rem', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', fontWeight: '500' }),
                     el('div').text('Border & Radius').border('2px solid #10b981').radius('12px')
-                        .class('flex items-center justify-center px-4 py-2 bg-green-50 text-green-700 font-medium'),
+                        .css({ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.5rem 1rem', background: '#ecfdf5', color: '#047857', borderRadius: '0.75rem', fontWeight: '500' }),
                     el('div').text('Shadow').boxShadow('0 10px 25px rgba(0,0,0,0.2)')
-                        .class('flex items-center justify-center px-6 py-3 bg-white rounded-lg font-medium text-gray-700')
+                        .css({ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.75rem 1.5rem', background: '#ffffff', borderRadius: '0.75rem', fontWeight: '500', color: '#374151' })
                 ])
             ]),
             
             // CSS object method
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('CSS Object Method:'),
-                el('div').text('Styled with object').class('font-medium').css({
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('CSS Object Method:'),
+                el('div').text('Styled with object').css({
                     'background': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     'color': 'white',
                     'padding': '24px',
@@ -95,26 +92,90 @@
                 })
             ]),
             
+            // Animation demo
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Animation Demo:'),
+                el('div').css({ fontWeight: '500', color: '#ffffff', borderRadius: '1rem', padding: '1.5rem', boxShadow: '0 25px 50px rgba(0,0,0,0.15)' }).css({
+                    background: 'linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%)',
+                    display: 'inline-block',
+                    animation: {
+                        name: 'slide-right',
+                        duration: '1.5s',
+                        timingFunction: 'ease-in-out',
+                        iterationCount: 'infinite',
+                        direction: 'alternate',
+                        keyframes: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(14px)' }
+                        }
+                    }
+                }).text('Animated Card')
+            ]),
+
+            // Pseudo-element demo
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Pseudo-element Demo:'),
+                el('button').text('Hover me').css({ position: 'relative', overflow: 'hidden', padding: '0.75rem 1.5rem', borderRadius: '1rem', color: '#ffffff', fontWeight: '600', transition: 'all 0.2s ease' }).css({
+                    background: '#111827',
+                    position: 'relative',
+                    overflow: 'hidden',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    zIndex: '10',
+                    '&::before': {
+                        content: '""',
+                        position: 'absolute',
+                        left: '0',
+                        top: '0',
+                        width: '100%',
+                        height: '100%',
+                        background: 'rgba(59,130,246,0.18)',
+                        borderRadius: '14px',
+                        pointerEvents: 'none',
+                        zIndex: '0'
+                    },
+                    '&::after': {
+                        content: '""',
+                        position: 'absolute',
+                        left: '8px',
+                        top: '8px',
+                        width: 'calc(100% - 16px)',
+                        height: 'calc(100% - 16px)',
+                        border: '2px solid rgba(255,255,255,0.18)',
+                        borderRadius: '12px',
+                        pointerEvents: 'none',
+                        zIndex: '0'
+                    },
+                    '&:hover::before': {
+                        background: 'rgba(59,130,246,0.36)'
+                    },
+                    '&:hover::after': {
+                        borderColor: 'rgba(255,255,255,0.32)'
+                    }
+                })
+            ]),
+            
             // Flexbox
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Flexbox:'),
-                el('div').flex('row').justify('center').items('center').gap('12px').class('bg-gray-100 p-4 rounded-lg').child([
-                    el('div').text('Item 1').class('bg-white px-6 py-3 rounded-lg shadow-sm font-medium text-gray-700'),
-                    el('div').text('Item 2').class('bg-white px-6 py-3 rounded-lg shadow-sm font-medium text-gray-700'),
-                    el('div').text('Item 3').class('bg-white px-6 py-3 rounded-lg shadow-sm font-medium text-gray-700')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Flexbox:'),
+                el('div').flex('row').justify('center').items('center').gap('12px').css({ background: '#f3f4f6', padding: '1rem', borderRadius: '0.75rem' }).child([
+                    el('div').text('Item 1').css({ background: '#ffffff', padding: '0.75rem 1.5rem', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '500', color: '#374151' }),
+                    el('div').text('Item 2').css({ background: '#ffffff', padding: '0.75rem 1.5rem', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '500', color: '#374151' }),
+                    el('div').text('Item 3').css({ background: '#ffffff', padding: '0.75rem 1.5rem', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '500', color: '#374151' })
                 ])
             ]),
             
             // Grid
-            el('div').class('bg-gray-50 rounded-lg p-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Grid:'),
-                el('div').grid('repeat(3, 1fr)').gap('12px').class('bg-gray-100 p-4 rounded-lg').child([
-                    el('div').text('1').class('bg-white p-6 text-center rounded-lg shadow-sm font-bold text-gray-700'),
-                    el('div').text('2').class('bg-white p-6 text-center rounded-lg shadow-sm font-bold text-gray-700'),
-                    el('div').text('3').class('bg-white p-6 text-center rounded-lg shadow-sm font-bold text-gray-700'),
-                    el('div').text('4').class('bg-white p-6 text-center rounded-lg shadow-sm font-bold text-gray-700'),
-                    el('div').text('5').class('bg-white p-6 text-center rounded-lg shadow-sm font-bold text-gray-700'),
-                    el('div').text('6').class('bg-white p-6 text-center rounded-lg shadow-sm font-bold text-gray-700')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Grid:'),
+                el('div').grid('repeat(3, 1fr)').gap('12px').css({ background: '#f3f4f6', padding: '1rem', borderRadius: '0.75rem' }).child([
+                    el('div').text('1').css({ background: '#ffffff', padding: '1.5rem', textAlign: 'center', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '700', color: '#374151' }),
+                    el('div').text('2').css({ background: '#ffffff', padding: '1.5rem', textAlign: 'center', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '700', color: '#374151' }),
+                    el('div').text('3').css({ background: '#ffffff', padding: '1.5rem', textAlign: 'center', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '700', color: '#374151' }),
+                    el('div').text('4').css({ background: '#ffffff', padding: '1.5rem', textAlign: 'center', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '700', color: '#374151' }),
+                    el('div').text('5').css({ background: '#ffffff', padding: '1.5rem', textAlign: 'center', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '700', color: '#374151' }),
+                    el('div').text('6').css({ background: '#ffffff', padding: '1.5rem', textAlign: 'center', borderRadius: '0.75rem', boxShadow: '0 1px 2px rgba(0,0,0,0.05)', fontWeight: '700', color: '#374151' })
                 ])
             ])
         ]);
@@ -122,27 +183,27 @@
         // ============================================
         // 3. EVENT HANDLING
         // ============================================
-        const eventSection = el('div').class('bg-white rounded-xl shadow-lg p-6 m-6 border border-gray-100').child([
-            el('h2').class('text-2xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-green-500 flex items-center gap-2').child([
-                el('i').class('fas fa-mouse-pointer text-green-500'),
+        const eventSection = el('div').css({ background: '#ffffff', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.08)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #e5e7eb' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #22c55e', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-mouse-pointer').css({ color: '#22c55e' }),
                 el('span').text('3. Event Handling')
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Click Events:'),
-                el('div').class('flex flex-wrap gap-2').child([
-                    el('button').class('bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg').text('Click Me').click((e) => {
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Click Events:'),
+                el('div').flex('row').wrap('wrap').gap('0.5rem').child([
+                    el('button').css({ background: '#2563eb', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', hover: { background: '#1d4ed8', boxShadow: '0 20px 25px rgba(0,0,0,0.15)' } }).text('Click Me').click((e) => {
                         logOutput('Button clicked! Target: ' + e.target.tagName);
                     }),
-                    el('button').class('bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg').text('Double Click').dblclick(() => {
+                    el('button').css({ background: '#16a34a', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', hover: { background: '#15803d', boxShadow: '0 20px 25px rgba(0,0,0,0.15)' } }).text('Double Click').dblclick(() => {
                         logOutput('Double clicked!');
                     })
                 ])
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Input Events:'),
-                el('input').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Input Events:'),
+                el('input').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', border:'1px solid #d1d5db', borderRadius:'0.75rem', outline:'none', transition:'box-shadow 0.2s ease', boxShadow:'0 0 0 0 transparent' })
                     .placeholder('Type here...').type('text').id('demo-input')
                     .input((e) => logOutput('Input: ' + e.target.value))
                     .change((e) => logOutput('Changed to: ' + e.target.value))
@@ -150,33 +211,33 @@
                     .keydown((e) => { if(e.key === 'Enter') logOutput('Enter pressed!'); })
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Mouse Events:'),
-                el('div').text('Hover over me!').class('bg-white border-2 border-gray-200 rounded-lg p-4 text-center font-medium text-gray-700 cursor-pointer transition-all duration-200 hover:shadow-md').id('hover-box')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Mouse Events:'),
+                el('div').text('Hover over me!').id('hover-box').css({ background: '#ffffff', border: '2px solid #e5e7eb', borderRadius: '0.75rem', padding: '1rem', textAlign: 'center', fontWeight: '500', color: '#374151', cursor: 'pointer', transition: 'all 0.2s ease', boxShadow: '0 0 0 rgba(0,0,0,0)' })
                     .hover(
-                        () => { document.getElementById('hover-box').classList.add('bg-green-50', 'border-green-300'); },
-                        () => { document.getElementById('hover-box').classList.remove('bg-green-50', 'border-green-300'); }
+                        () => { document.getElementById('hover-box').style.background = '#d1fae5'; document.getElementById('hover-box').style.borderColor = '#86efac'; },
+                        () => { document.getElementById('hover-box').style.background = '#ffffff'; document.getElementById('hover-box').style.borderColor = '#e5e7eb'; }
                     )
                     .mousedown(() => logOutput('Mouse down'))
                     .mouseup(() => logOutput('Mouse up'))
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Form Submit:'),
-                el('form').id('demo-form').class('space-y-3').child([
-                    el('input').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Form Submit:'),
+                el('form').id('demo-form').css({ display:'grid', rowGap:'0.75rem' }).child([
+                    el('input').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', border:'1px solid #d1d5db', borderRadius:'0.75rem', outline:'none', transition:'box-shadow 0.2s ease', boxShadow:'0 0 0 0 transparent' })
                         .type('text').name('username').placeholder('Username'),
-                    el('input').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none')
+                    el('input').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', border:'1px solid #d1d5db', borderRadius:'0.75rem', outline:'none', transition:'box-shadow 0.2s ease', boxShadow:'0 0 0 0 transparent' })
                         .type('email').name('email').placeholder('Email'),
-                    el('button').class('bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg').type('submit').text('Submit')
+                    el('button').css({ background: '#2563eb', color: '#fff', fontWeight: '500', padding: '0.5rem 1.5rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', hover: { background: '#1d4ed8', boxShadow: '0 20px 25px rgba(0,0,0,0.15)' } }).type('submit').text('Submit')
                 ]).submit((data) => {
                     logOutput('Form submitted: ' + JSON.stringify(data, null, 2));
                 })
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Custom Event (on):'),
-                el('div').id('custom-event-box').text('Right-click me!').class('bg-white border-2 border-gray-200 rounded-lg p-4 text-center font-medium text-gray-700 cursor-context-menu')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Custom Event (on):'),
+                el('div').id('custom-event-box').text('Right-click me!').css({ background: '#ffffff', border: '2px solid #e5e7eb', borderRadius: '0.75rem', padding: '1rem', textAlign: 'center', fontWeight: '500', color: '#374151', cursor: 'context-menu' })
                     .contextmenu((e) => {
                         e.preventDefault();
                         logOutput('Custom context menu triggered!');
@@ -187,80 +248,80 @@
         // ============================================
         // 4. DOM MANIPULATION
         // ============================================
-        const domSection = el('div').class('bg-white rounded-xl shadow-lg p-6 m-6 border border-gray-100').child([
-            el('h2').class('text-2xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-orange-500 flex items-center gap-2').child([
-                el('i').class('fas fa-code text-orange-500'),
+        const domSection = el('div').css({ background: '#ffffff', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.08)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #e5e7eb' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #f97316', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-code').css({ color: '#f97316' }),
                 el('span').text('4. DOM Manipulation')
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Show/Hide/Toggle:'),
-                el('div').id('toggle-target').text('Target Element').class('bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-4 mb-3 text-center font-medium text-gray-700'),
-                el('div').class('flex flex-wrap gap-2').child([
-                    el('button').class('bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Hide').click(() => {
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Show/Hide/Toggle:'),
+                el('div').id('toggle-target').text('Target Element').css({ background: 'linear-gradient(90deg, #eff6ff 0%, #e0e7ff 100%)', border: '1px solid #bfdbfe', borderRadius: '0.75rem', padding: '1rem', marginBottom: '0.75rem', textAlign: 'center', fontWeight: '500', color: '#374151' }),
+                el('div').flex('row').wrap('wrap').gap('0.5rem').child([
+                    el('button').css({ background: '#dc2626', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#b91c1c' } }).text('Hide').click(() => {
                         el(document.getElementById('toggle-target')).hide();
                     }),
-                    el('button').class('bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Show').click(() => {
+                    el('button').css({ background: '#16a34a', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#15803d' } }).text('Show').click(() => {
                         el(document.getElementById('toggle-target')).show();
                     }),
-                    el('button').class('bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Toggle').click(() => {
+                    el('button').css({ background: '#2563eb', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#1d4ed8' } }).text('Toggle').click(() => {
                         el(document.getElementById('toggle-target')).toggle();
                     })
                 ])
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Add/Remove/Toggle Class:'),
-                el('div').id('class-target').text('Class Target').class('bg-white border border-gray-200 rounded-lg p-4 mb-3 text-center font-medium text-gray-700 transition-all duration-200'),
-                el('div').class('flex flex-wrap gap-2').child([
-                    el('button').class('bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Add highlight').click(() => {
-                        el(document.getElementById('class-target')).class('highlight');
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Add/Remove/Toggle Class:'),
+                el('div').id('class-target').text('Class Target').css({ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '0.75rem', padding: '1rem', marginBottom: '0.75rem', textAlign: 'center', fontWeight: '500', color: '#374151', transition: 'all 0.2s ease' }),
+                el('div').flex('row').wrap('wrap').gap('0.5rem').child([
+                    el('button').css({ background: '#eab308', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#ca8a04' } }).text('Add highlight').click(() => {
+                        el(document.getElementById('class-target')).css({ backgroundColor: '#fbbf24' });
                     }),
-                    el('button').class('bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Remove highlight').click(() => {
-                        el(document.getElementById('class-target')).removeClass('highlight');
+                    el('button').css({ background: '#6b7280', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#4b5563' } }).text('Remove highlight').click(() => {
+                        el(document.getElementById('class-target')).css({ backgroundColor: '' });
                     }),
-                    el('button').class('bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Toggle highlight').click(() => {
-                        el(document.getElementById('class-target')).toggleClass('highlight');
+                    el('button').css({ background: '#7c3aed', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#6d28d9' } }).text('Toggle highlight').click(() => {
+                        el(document.getElementById('class-target')).css({ backgroundColor: '#fbbf24' });
                     })
                 ])
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Content Manipulation:'),
-                el('div').id('content-target').html('<p>Original <b>HTML</b> content</p>').class('bg-white border border-gray-200 rounded-lg p-4 mb-3 text-gray-700'),
-                el('div').class('flex flex-wrap gap-2').child([
-                    el('button').class('bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Set Text').click(() => {
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Content Manipulation:'),
+                el('div').id('content-target').html('<p>Original <b>HTML</b> content</p>').css({ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '0.75rem', padding: '1rem', marginBottom: '0.75rem', color: '#374151' }),
+                el('div').flex('row').wrap('wrap').gap('0.5rem').child([
+                    el('button').css({ background: '#4f46e5', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#4338ca' } }).text('Set Text').click(() => {
                         el(document.getElementById('content-target')).text('Plain text content');
                     }),
-                    el('button').class('bg-pink-600 hover:bg-pink-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Set HTML').click(() => {
+                    el('button').css({ background: '#ec4899', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#db2777' } }).text('Set HTML').click(() => {
                         el(document.getElementById('content-target')).html('<em>Italic HTML</em>');
                     }),
-                    el('button').class('bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Clear').click(() => {
+                    el('button').css({ background: '#4b5563', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#374151' } }).text('Clear').click(() => {
                         el(document.getElementById('content-target')).clear();
                     })
                 ])
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Find & Traverse:'),
-                el('div').id('parent-element').class('bg-white border border-gray-200 rounded-lg p-4 mb-3 space-y-2').child([
-                    el('p').class('child-1 bg-gray-50 p-2 rounded').text('First child'),
-                    el('p').class('child-2 bg-gray-50 p-2 rounded').text('Second child'),
-                    el('p').class('child-3 bg-gray-50 p-2 rounded').text('Third child')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Find & Traverse:'),
+                el('div').id('parent-element').css({ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '0.75rem', padding: '1rem', marginBottom: '0.75rem', display: 'grid', rowGap: '0.5rem' }).child([
+                    el('p').css({ background: '#f8fafc', padding: '0.5rem', borderRadius: '0.75rem' }).text('First child'),
+                    el('p').css({ background: '#f8fafc', padding: '0.5rem', borderRadius: '0.75rem' }).text('Second child'),
+                    el('p').css({ background: '#f8fafc', padding: '0.5rem', borderRadius: '0.75rem' }).text('Third child')
                 ]),
-                el('div').class('flex flex-wrap gap-2').child([
-                    el('button').class('bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Find .child-2').click(() => {
+                el('div').flex('row').wrap('wrap').gap('0.5rem').child([
+                    el('button').css({ background: '#0f766e', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#115e59' } }).text('Find .child-2').click(() => {
                         const found = el(document.getElementById('parent-element')).find('.child-2');
                         if(found) {
-                            found.class('highlight');
+                            found.css({ backgroundColor: '#fbbf24' });
                             logOutput('Found: ' + found.get().textContent);
                         }
                     }),
-                    el('button').class('bg-cyan-600 hover:bg-cyan-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('First Child').click(() => {
+                    el('button').css({ background: '#0891b2', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#0e7490' } }).text('First Child').click(() => {
                         const first = el(document.getElementById('parent-element')).first();
                         if(first) logOutput('First: ' + first.get().textContent);
                     }),
-                    el('button').class('bg-sky-600 hover:bg-sky-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('All Children').click(() => {
+                    el('button').css({ background: '#0284c7', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#0369a1' } }).text('All Children').click(() => {
                         const children = el(document.getElementById('parent-element')).getChildren();
                         logOutput('Children count: ' + children.length);
                     })
@@ -271,53 +332,53 @@
         // ============================================
         // 5. FORM ELEMENTS
         // ============================================
-        const formSection = el('div').class('bg-white rounded-xl shadow-lg p-6 m-6 border border-gray-100').child([
-            el('h2').class('text-2xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-pink-500 flex items-center gap-2').child([
-                el('i').class('fas fa-edit text-pink-500'),
+        const formSection = el('div').css({ background: '#ffffff', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.08)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #e5e7eb' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #ec4899', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-edit').css({ color: '#ec4899' }),
                 el('span').text('5. Form Elements')
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Input Types:'),
-                el('div').class('grid grid-cols-1 md:grid-cols-2 gap-3').child([
-                    el('input').type('text').placeholder('Text input').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none').value('Default text'),
-                    el('input').type('password').placeholder('Password').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none'),
-                    el('input').type('email').placeholder('Email').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none'),
-                    el('input').type('number').placeholder('Number').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none'),
-                    el('input').type('date').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none'),
-                    el('div').class('flex items-center gap-2').child([
-                        el('input').type('checkbox').checked(true).class('w-5 h-5 text-pink-600 rounded focus:ring-pink-500').get(),
-                        el('label').class('text-gray-700').text('Checkbox')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Input Types:'),
+                el('div').grid('repeat(2, 1fr)').gap('1rem').child([
+                    el('input').type('text').placeholder('Text input').css({ boxSizing:'border-box', width: '100%', padding: '0.75rem 1rem', border: '1px solid #d1d5db', borderRadius: '0.75rem', outline: 'none', transition: 'box-shadow 0.2s ease', boxShadow: '0 0 0 0 transparent' }).value('Default text'),
+                    el('input').type('password').placeholder('Password').css({ boxSizing:'border-box', width: '100%', padding: '0.75rem 1rem', border: '1px solid #d1d5db', borderRadius: '0.75rem', outline: 'none', transition: 'box-shadow 0.2s ease', boxShadow: '0 0 0 0 transparent' }),
+                    el('input').type('email').placeholder('Email').css({ boxSizing:'border-box', width: '100%', padding: '0.75rem 1rem', border: '1px solid #d1d5db', borderRadius: '0.75rem', outline: 'none', transition: 'box-shadow 0.2s ease', boxShadow: '0 0 0 0 transparent' }),
+                    el('input').type('number').placeholder('Number').css({ boxSizing:'border-box', width: '100%', padding: '0.75rem 1rem', border: '1px solid #d1d5db', borderRadius: '0.75rem', outline: 'none', transition: 'box-shadow 0.2s ease', boxShadow: '0 0 0 0 transparent' }),
+                    el('input').type('date').css({ boxSizing:'border-box', width: '100%', padding: '0.75rem 1rem', border: '1px solid #d1d5db', borderRadius: '0.75rem', outline: 'none', transition: 'box-shadow 0.2s ease', boxShadow: '0 0 0 0 transparent', gridColumn: 'span 2' }),
+                    el('div').css({ display: 'flex', alignItems: 'center', gap: '0.5rem', gridColumn: 'span 2' }).child([
+                        el('input').type('checkbox').checked(true).css({ width:'1.25rem', height:'1.25rem', accentColor:'#ec4899', borderRadius:'0.25rem' }).get(),
+                        el('label').css({ color: '#374151' }).text('Checkbox')
                     ]),
-                    el('div').class('flex items-center gap-4').child([
-                        el('div').class('flex items-center gap-2').child([
-                            el('input').type('radio').name('radio-group').class('w-5 h-5 text-pink-600 focus:ring-pink-500').get(),
-                            el('label').class('text-gray-700').text('Radio 1')
+                    el('div').css({ display: 'flex', alignItems: 'center', gap: '1rem', gridColumn: 'span 2' }).child([
+                        el('div').css({ display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                            el('input').type('radio').name('radio-group').css({ width:'1.25rem', height:'1.25rem', accentColor:'#ec4899' }).get(),
+                            el('label').css({ color: '#374151' }).text('Radio 1')
                         ]),
-                        el('div').class('flex items-center gap-2').child([
-                            el('input').type('radio').name('radio-group').class('w-5 h-5 text-pink-600 focus:ring-pink-500').get(),
-                            el('label').class('text-gray-700').text('Radio 2')
+                        el('div').css({ display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                            el('input').type('radio').name('radio-group').css({ width:'1.25rem', height:'1.25rem', accentColor:'#ec4899' }).get(),
+                            el('label').css({ color: '#374151' }).text('Radio 2')
                         ])
                     ])
                 ])
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Select & Textarea:'),
-                el('select').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none mb-3').child([
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Select & Textarea:'),
+                el('select').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', border:'1px solid #d1d5db', borderRadius:'0.75rem', outline:'none', transition:'box-shadow 0.2s ease', boxShadow:'0 0 0 0 transparent', marginBottom:'0.75rem' }).child([
                     el('option').value('').text('Choose...'),
                     el('option').value('1').text('Option 1'),
                     el('option').value('2').text('Option 2'),
                     el('option').value('3').text('Option 3')
                 ]).change((e) => logOutput('Selected: ' + e.target.value)),
-                el('textarea').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent outline-none resize-none').placeholder('Textarea...').height('100px')
+                el('textarea').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', border:'1px solid #d1d5db', borderRadius:'0.75rem', outline:'none', transition:'box-shadow 0.2s ease', boxShadow:'0 0 0 0 transparent', resize:'none' }).placeholder('Textarea...').height('100px')
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Disabled & Required:'),
-                el('div').class('grid grid-cols-1 md:grid-cols-2 gap-3').child([
-                    el('input').class('w-full px-4 py-2 bg-gray-100 border border-gray-300 rounded-lg text-gray-500 cursor-not-allowed').placeholder('Disabled input').disabled(true),
-                    el('input').class('w-full px-4 py-2 border-2 border-red-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent outline-none').placeholder('Required input').required()
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Disabled & Required:'),
+                el('div').grid('repeat(2, 1fr)').gap('0.75rem').child([
+                    el('input').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', background:'#f3f4f6', border:'1px solid #d1d5db', borderRadius:'0.75rem', color:'#6b7280', cursor:'not-allowed' }).placeholder('Disabled input').disabled(true),
+                    el('input').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', border:'2px solid #fecaca', borderRadius:'0.75rem', outline:'none', transition:'box-shadow 0.2s ease', boxShadow:'0 0 0 0 transparent' }).placeholder('Required input').required()
                 ])
             ])
         ]);
@@ -325,16 +386,16 @@
         // ============================================
         // 6. SVG SUPPORT
         // ============================================
-        const svgSection = el('div').class('bg-white rounded-xl shadow-lg p-6 m-6 border border-gray-100').child([
-            el('h2').class('text-2xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-indigo-500 flex items-center gap-2').child([
-                el('i').class('fas fa-shapes text-indigo-500'),
+        const svgSection = el('div').css({ background: '#ffffff', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.08)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #e5e7eb' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #6366f1', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-shapes').css({ color: '#6366f1' }),
                 el('span').text('6. SVG Support')
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('SVG Elements:'),
-                el('div').class('flex justify-center').child(
-                    el('svg').attr('width', '200').attr('height', '200').attr('viewBox', '0 0 200 200').class('drop-shadow-lg').child([
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('SVG Elements:'),
+                el('div').css({ display: 'flex', justifyContent: 'center' }).child(
+                    el('svg').attr('width', '200').attr('height', '200').attr('viewBox', '0 0 200 200').css({ filter: 'drop-shadow(0 25px 25px rgba(0,0,0,0.15))' }).child([
                         el('circle').attr('cx', '100').attr('cy', '100').attr('r', '80').attr('fill', '#4f46e5'),
                         el('rect').attr('x', '70').attr('y', '70').attr('width', '60').attr('height', '60').attr('fill', '#fff').attr('rx', '8'),
                         el('text').attr('x', '100').attr('y', '110').attr('text-anchor', 'middle').attr('fill', '#4f46e5').attr('font-size', '24').attr('font-weight', 'bold').text('SVG')
@@ -346,54 +407,54 @@
         // ============================================
         // 7. UTILITY METHODS
         // ============================================
-        const utilitySection = el('div').class('bg-white rounded-xl shadow-lg p-6 m-6 border border-gray-100').child([
-            el('h2').class('text-2xl font-bold text-gray-800 mb-4 pb-2 border-b-2 border-teal-500 flex items-center gap-2').child([
-                el('i').class('fas fa-tools text-teal-500'),
+        const utilitySection = el('div').css({ background: '#ffffff', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(0,0,0,0.08)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #e5e7eb' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#1f2937', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #14b8a6', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-tools').css({ color: '#14b8a6' }),
                 el('span').text('7. Utility Methods')
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Getters:'),
-                el('div').id('getter-demo').class('bg-white border border-gray-200 rounded-lg p-4 mb-3').attr('data-test', '123').child(
-                    el('p').class('text-gray-700').text('Demo content for getters')
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Getters:'),
+                el('div').id('getter-demo').css({ background: '#ffffff', border: '1px solid #e5e7eb', borderRadius: '0.75rem', padding: '1rem', marginBottom: '0.75rem' }).attr('data-test', '123').child(
+                    el('p').css({ color: '#374151' }).text('Demo content for getters')
                 ),
-                el('div').class('flex flex-wrap gap-2').child([
-                    el('button').class('bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Get HTML').click(() => {
+                el('div').flex('row').wrap('wrap').gap('0.5rem').child([
+                    el('button').css({ background: '#0f766e', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#115e59' } }).text('Get HTML').click(() => {
                         const html = el(document.getElementById('getter-demo')).getHtml();
                         logOutput('HTML: ' + html.substring(0, 100) + '...');
                     }),
-                    el('button').class('bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Get Text').click(() => {
+                    el('button').css({ background: '#0f766e', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#115e59' } }).text('Get Text').click(() => {
                         const text = el(document.getElementById('getter-demo')).getText();
                         logOutput('Text: ' + text);
                     }),
-                    el('button').class('bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Get data-test').click(() => {
+                    el('button').css({ background: '#0f766e', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#115e59' } }).text('Get data-test').click(() => {
                         const data = el(document.getElementById('getter-demo')).getData('test');
                         logOutput('data-test: ' + data);
                     }),
-                    el('button').class('bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Get Dimensions').click(() => {
+                    el('button').css({ background: '#0f766e', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#115e59' } }).text('Get Dimensions').click(() => {
                         const elem = el(document.getElementById('getter-demo'));
                         logOutput('Width: ' + elem.getWidth() + ', Height: ' + elem.getHeight());
                     })
                 ])
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4 mb-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Focus & Scroll:'),
-                el('input').id('focus-input').class('w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-teal-500 focus:border-transparent outline-none mb-3').placeholder('Focus target'),
-                el('div').class('flex flex-wrap gap-2').child([
-                    el('button').class('bg-teal-600 hover:bg-teal-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Focus').click(() => {
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem', marginBottom: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Focus & Scroll:'),
+                el('input').id('focus-input').css({ boxSizing:'border-box', width:'100%', padding:'0.75rem 1rem', border:'1px solid #d1d5db', borderRadius:'0.75rem', outline:'none', transition:'box-shadow 0.2s ease', boxShadow:'0 0 0 0 transparent', marginBottom:'0.75rem' }).placeholder('Focus target'),
+                el('div').flex('row').wrap('wrap').gap('0.5rem').child([
+                    el('button').css({ background: '#0f766e', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#115e59' } }).text('Focus').click(() => {
                         el(document.getElementById('focus-input')).focus();
                     }),
-                    el('button').class('bg-gray-600 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200').text('Blur').click(() => {
+                    el('button').css({ background: '#4b5563', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', hover: { background: '#374151' } }).text('Blur').click(() => {
                         el(document.getElementById('focus-input')).blur();
                     })
                 ])
             ]),
             
-            el('div').class('bg-gray-50 rounded-lg p-4').child([
-                el('h3').class('text-lg font-semibold text-gray-700 mb-3').text('Loop Function (Auto-stop when removed):'),
-                el('div').id('loop-counter').text('Counter: 0').class('bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200 rounded-lg p-4 mb-3 text-center font-bold text-teal-700 text-xl'),
-                el('button').class('bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg').text('Remove Counter').click(() => {
+            el('div').css({ background: '#f8fafc', borderRadius: '0.75rem', padding: '1rem' }).child([
+                el('h3').css({ fontSize: '1.125rem', fontWeight: '600', color: '#374151', marginBottom: '0.75rem' }).text('Loop Function (Auto-stop when removed):'),
+                el('div').id('loop-counter').text('Counter: 0').css({ background: 'linear-gradient(90deg, #ecfeff 0%, #cffafe 100%)', border: '1px solid #5eead4', borderRadius: '0.75rem', padding: '1rem', marginBottom: '0.75rem', textAlign: 'center', fontWeight: '700', color: '#0f766e', fontSize: '1.25rem' }),
+                el('button').css({ background: '#dc2626', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', boxShadow: '0 10px 15px rgba(0,0,0,0.1)', hover: { background: '#b91c1c', boxShadow: '0 20px 25px rgba(0,0,0,0.15)' } }).text('Remove Counter').click(() => {
                     document.getElementById('loop-counter').remove();
                 })
             ])
@@ -402,31 +463,31 @@
         // ============================================
         // OUTPUT CONSOLE
         // ============================================
-        const outputSection = el('div').class('bg-gray-900 rounded-xl shadow-lg p-6 m-6 border border-gray-700').child([
-            el('h2').class('text-2xl font-bold text-white mb-4 pb-2 border-b-2 border-gray-600 flex items-center gap-2').child([
-                el('i').class('fas fa-terminal text-green-400'),
+        const outputSection = el('div').css({ background: '#0f172a', borderRadius: '1rem', boxShadow: '0 25px 50px rgba(15,23,42,0.6)', padding: '1.5rem', margin: '1.5rem', border: '1px solid #334155' }).child([
+            el('h2').css({ fontSize: '1.5rem', fontWeight: '700', color: '#ffffff', marginBottom: '1rem', paddingBottom: '0.5rem', borderBottom: '2px solid #4b5563', display: 'flex', alignItems: 'center', gap: '0.5rem' }).child([
+                el('i').class('fas fa-terminal').css({ color: '#4ade80' }),
                 el('span').text('Output Console')
             ]),
-            el('button').class('bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 mb-4').text('Clear Output').click(() => {
+            el('button').css({ background: '#dc2626', color: '#fff', fontWeight: '500', padding: '0.5rem 1rem', borderRadius: '0.75rem', transition: 'all 0.2s ease', marginBottom: '1rem', hover: { background: '#b91c1c' } }).text('Clear Output').click(() => {
                 document.getElementById('output').textContent = '';
             }),
-            el('div').id('output').class('bg-black rounded-lg p-4 font-mono text-sm text-green-400 h-48 overflow-y-auto border border-gray-700').text('// Output will appear here...')
+            el('div').id('output').css({ background: '#000000', borderRadius: '0.75rem', padding: '1rem', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \u201CLiberation Mono\u201D, monospace', fontSize: '0.875rem', color: '#4ade80', height: '12rem', overflowY: 'auto', border: '1px solid #374151' }).text('// Output will appear here...')
         ]);
 
         // ============================================
         // BUILD APP
         // ============================================
-        const app = el('div').class('min-h-screen pb-8').child([
+        const app = el('div').css({ minHeight:'100vh', paddingBottom:'2rem' }).child([
             // Header
-            el('header').class('bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-8 shadow-lg').child([
-                el('div').class('container mx-auto px-6 text-center').child([
-                    el('h1').class('text-4xl md:text-5xl font-bold mb-2').text('el.js'),
-                    el('p').class('text-xl text-blue-100').text('Complete Examples with Tailwind CSS')
+            el('header').css({ background: 'linear-gradient(90deg, #2563eb 0%, #8b5cf6 50%, #ec4899 100%)', color: '#ffffff', padding: '2rem 0', boxShadow: '0 25px 50px rgba(0,0,0,0.1)' }).child([
+                el('div').css({ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0 1.5rem', textAlign: 'center' }).child([
+                    el('h1').css({ fontSize: '2.5rem', fontWeight: '700', marginBottom: '0.5rem' }).text('el.js'),
+                    el('p').css({ fontSize: '1.25rem', color: '#dbeafe' }).text('Complete Examples with el.js CSS')
                 ])
             ]),
             
             // Content
-            el('main').class('container mx-auto max-w-5xl').child([
+            el('main').css({ width: '100%', maxWidth: '1200px', margin: '0 auto' }).child([
                 basicSection,
                 styleSection,
                 eventSection,
@@ -438,7 +499,7 @@
             ]),
             
             // Footer
-            el('footer').class('bg-gray-800 text-gray-400 py-6 mt-8 text-center').child(
+            el('footer').css({ background: '#1f2937', color: '#9ca3af', padding: '1.5rem 0', marginTop: '2rem', textAlign: 'center' }).child(
                 el('p').text('Built with el.js and Tailwind CSS')
             )
         ]);

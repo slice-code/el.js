@@ -78,7 +78,7 @@
 
       setTimeout(function () {
 
-        var id = 'loop-' + Date.now();
+        var id = 'loop-' + generateUUID();
         noscript.setAttribute('loopFunc-id-el-ui', id);
 
         var timeoutId = null;
@@ -113,22 +113,192 @@
       return this.el.value
     }
     var toCamelCase = function (str) {
-      // Jika CSS variable (--var), kembalikan apa adanya
       if (str.startsWith('--')) return str;
-      // Convert kebab-case ke camelCase
       return str.replace(/-([a-z])/g, function (g) { return g[1].toUpperCase(); });
     }
+
+    var toKebabCase = function (str) {
+      if (str.startsWith('--')) return str;
+      return str.replace(/([A-Z])/g, function (g) { return '-' + g.toLowerCase(); }).replace(/^ms-/, '-ms-');
+    }
+
+    var idCounter = 0;
+    var generateUUID = function (prefix) {
+      idCounter += 1;
+      var randomPart = Math.random().toString(36).slice(2, 10);
+      return (prefix ? prefix + '-' : '') + randomPart + '-' + idCounter;
+    };
+
+    var ensureStyleSheet = function () {
+      var styleTag = document.getElementById('eljs-style-rules');
+      if (!styleTag) {
+        styleTag = document.createElement('style');
+        styleTag.id = 'eljs-style-rules';
+        document.head.appendChild(styleTag);
+      }
+      return styleTag.sheet;
+    }
+
+    var addCssRule = function (selector, styles) {
+      var sheet = ensureStyleSheet();
+      var styleRuleType = window.CSSRule ? window.CSSRule.STYLE_RULE : 1;
+      var existingRule = null;
+      for (var i = 0; i < sheet.cssRules.length; i++) {
+        var rule = sheet.cssRules[i];
+        if (rule.type === styleRuleType && rule.selectorText === selector) {
+          existingRule = rule;
+          break;
+        }
+      }
+      if (existingRule) {
+        Object.keys(styles).forEach(function (key) {
+          existingRule.style.setProperty(toKebabCase(key), styles[key]);
+        });
+        return;
+      }
+      var declarations = Object.keys(styles).map(function (key) {
+        return toKebabCase(key) + ': ' + styles[key] + ';';
+      }).join(' ');
+      try {
+        sheet.insertRule(selector + ' { ' + declarations + ' }', sheet.cssRules.length);
+      } catch (e) {
+        console.warn('el.css: Failed to add CSS rule for', selector, e);
+      }
+    }
+
+    var createKeyframesRule = function (name, frames) {
+      var sheet = ensureStyleSheet();
+      var frameRules = Object.keys(frames).map(function (frameKey) {
+        var declarations = Object.keys(frames[frameKey]).map(function (property) {
+          return toKebabCase(property) + ': ' + frames[frameKey][property] + ';';
+        }).join(' ');
+        return frameKey + ' { ' + declarations + ' }';
+      }).join(' ');
+      try {
+        sheet.insertRule('@keyframes ' + name + ' { ' + frameRules + ' }', sheet.cssRules.length);
+      } catch (e) {
+        console.warn('el.css: Failed to add keyframes rule for', name, e);
+      }
+    }
+
+    var createPseudoClass = function (el) {
+      if (el.__eljsPseudoClass) return el.__eljsPseudoClass;
+      var className = generateUUID('eljs-pseudo');
+      el.classList.add(className);
+      el.__eljsPseudoClass = className;
+      return className;
+    }
+
+    var addTouchClassListeners = function (el) {
+      if (el.__eljsTouchListeners) return;
+      el.__eljsTouchListeners = true;
+      var activeClass = 'eljs-touch-active';
+      var addActive = function () {
+        el.classList.add(activeClass);
+      };
+      var removeActive = function () {
+        el.classList.remove(activeClass);
+      };
+      el.addEventListener('touchstart', addActive, false);
+      el.addEventListener('mousedown', addActive, false);
+      el.addEventListener('touchend', removeActive, false);
+      el.addEventListener('touchcancel', removeActive, false);
+      el.addEventListener('mouseup', removeActive, false);
+    }
+
+    var buildAnimationValue = function (animation) {
+      if (!animation || typeof animation !== 'object') return '';
+      var name = animation.name || animation.animationName || generateUUID('eljs-animation');
+      if (animation.keyframes && typeof animation.keyframes === 'object') {
+        createKeyframesRule(name, animation.keyframes);
+      }
+      var parts = [
+        name,
+        animation.duration || animation.animationDuration,
+        animation.timingFunction || animation.animationTimingFunction,
+        animation.delay || animation.animationDelay,
+        animation.iterationCount || animation.animationIterationCount,
+        animation.direction || animation.animationDirection,
+        animation.fillMode || animation.animationFillMode,
+        animation.playState || animation.animationPlayState
+      ].filter(Boolean);
+      return parts.join(' ');
+    };
+
     obj.css = function (a, b) {
-      if (typeof a == "object") {
-        var ky = Object.keys(a);
-        ky.forEach(function (item) {
-          this.el.style[toCamelCase(item)] = a[item];
-        }, this)
-        return this;
-      } else {
-        this.el.style[toCamelCase(a)] = b;
+      if (typeof a === 'object') {
+        var normalStyles = {};
+        var specialKeys = [];
+        Object.keys(a).forEach(function (item) {
+          var value = a[item];
+          var isPseudo = value && typeof value === 'object' && (item === 'hover' || item === ':hover' || item === 'active' || item === ':active' || item === 'touch' || item === 'before' || item === ':before' || item === 'after' || item === ':after' || item === 'focus' || item === ':focus' || item === 'animation' || item.startsWith('&:') || item.startsWith('&::') || item.startsWith('::') || item.startsWith(':'));
+          if (isPseudo) {
+            specialKeys.push(item);
+          } else {
+            normalStyles[item] = value;
+          }
+        }, this);
+
+        var className = null;
+        if (Object.keys(normalStyles).length > 0) {
+          className = createPseudoClass(this.el);
+          addCssRule('.' + className, normalStyles);
+        }
+
+        specialKeys.forEach(function (item) {
+          var value = a[item];
+          if (item === 'animation') {
+            this.el.style.animation = buildAnimationValue(value);
+            return;
+          }
+          if (!className) {
+            className = createPseudoClass(this.el);
+          }
+          var selector;
+          if (item === 'hover') {
+            selector = '.' + className + ':hover';
+          } else if (item === 'active') {
+            selector = '.' + className + ':active';
+          } else if (item === 'touch') {
+            selector = '.' + className + '.eljs-touch-active';
+            addTouchClassListeners(this.el);
+          } else if (item === 'before' || item === ':before') {
+            selector = '.' + className + '::before';
+          } else if (item === 'after' || item === ':after') {
+            selector = '.' + className + '::after';
+          } else if (item === 'focus') {
+            selector = '.' + className + ':focus';
+          } else if (item.startsWith('&')) {
+            selector = '.' + className + item.slice(1);
+          } else {
+            selector = '.' + className + item;
+          }
+          addCssRule(selector, value);
+        }, this);
+
         return this;
       }
+      if (typeof b === 'object' && a === 'animation') {
+        this.el.style.animation = buildAnimationValue(b);
+        return this;
+      }
+      this.el.style[toCamelCase(a)] = b;
+      return this;
+    }
+    obj.hoverStyle = function (styles) {
+      return this.css({ hover: styles });
+    }
+    obj.activeStyle = function (styles) {
+      return this.css({ active: styles });
+    }
+    obj.touchStyle = function (styles) {
+      return this.css({ touch: styles });
+    }
+    obj.animation = function (styles) {
+      if (typeof styles === 'object') {
+        return this.css({ animation: styles });
+      }
+      return this.css('animation', styles);
     }
     // Alias for css()
     obj.style = obj.css;

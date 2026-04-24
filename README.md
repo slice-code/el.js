@@ -10,17 +10,17 @@ A lightweight, chainable DOM manipulation library for modern JavaScript applicat
 
 #### jsDelivr
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.6/el.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.2/el.js"></script>
 ```
 
 #### unpkg
 ```html
-<script src="https://unpkg.com/@slice-code/el.js@1.0.6/el.js"></script>
+<script src="https://unpkg.com/@slice-code/el.js@1.1.2/el.js"></script>
 ```
 
 #### ESM via CDN
 ```javascript
-import 'https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.0.6/el.js';
+import 'https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.2/el.js';
 ```
 
 ### NPM
@@ -35,7 +35,8 @@ import './el.js';
 
 ### Script Tag (Local)
 ```html
-<script src="./el.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@slice-code/el.js@1.1.2/el.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/slice-code/el.js@1.1.2/admin/layout.js"></script>
 <script>
   // el is available globally
   const div = el('div').text('Hello World').get();
@@ -65,6 +66,69 @@ const card = el('div')
     el('button').text('Click Me').click(() => alert('Clicked!'))
   ])
   .get();
+```
+
+## Admin Layout Module
+
+`admin/layout.js` is an admin dashboard layout module built on top of `el.js`. It provides a responsive layout structure with:
+
+- configurable `navbar` and `sidebar` via API
+- mobile/desktop sidebar toggle support
+- sidebar menu with dropdowns and role-based access control (RBAC)
+- hash-based routing and middleware before page render
+- built-in toast, confirm, and modal support
+- custom theme support plus several built-in themes
+
+### Requirements
+
+- `el.js` must be loaded first
+- an HTML element `<div id="app"></div>` must exist
+
+### Main API
+
+- `layout.addPage(config)`
+- `layout.addSideMenu(menus)`
+- `layout.addNavbar(menus)`
+- `layout.setRole(role)`
+- `layout.getRole()`
+- `layout.middleware(fn)`
+- `layout.render()`
+- `layout.navigate(path)`
+- `layout.setTheme(name)`
+- `layout.setCustomTheme({ navbarBg, navbarColor, sidebarBg, sidebarColor })`
+- `layout.toast(message, options)`
+- `layout.notify(options)`
+- `layout.confirm(options)`
+- `layout.modal(options)`
+- `layout.closeConfirm()`
+- `layout.closeModal()`
+
+### Usage Example
+
+```html
+<div id="app"></div>
+<script src="./el.js"></script>
+<script src="./admin/layout.js"></script>
+<script>
+  layout.addPage({
+    path: '/',
+    component: () => el('div').text('Dashboard').get()
+  });
+
+  layout.addSideMenu([
+    { page: '/', name: 'Dashboard', icon: 'fas fa-home' },
+    { page: '/settings', name: 'Settings', icon: 'fas fa-cog' }
+  ]);
+
+  layout.addNavbar([
+    { page: '/profile', name: 'Profile' },
+    { page: '/logout', name: 'Logout' }
+  ]);
+
+  layout.setRole('admin');
+  layout.setTheme('blue');
+  layout.render();
+</script>
 ```
 
 ## Features
@@ -140,12 +204,114 @@ el('div')
 
 #### CSS Object Method
 
+Use `.css({ ... })` to apply regular styles and generate stylesheet rules for complex selectors. `.style({ ... })` is an alias for `.css({ ... })`.
+
 ```javascript
 el('div').css({
-  'background-color': '#3b82f6',
-  'color': 'white',
-  'padding': '20px',
-  'border-radius': '8px'
+  background: '#3b82f6',
+  color: 'white',
+  padding: '20px',
+  borderRadius: '8px'
+});
+```
+
+#### Hover / Active / Touch / Focus Styles
+
+```javascript
+el('button').css({
+  background: '#3b82f6',
+  color: '#fff',
+  padding: '12px 18px',
+  borderRadius: '8px',
+  transition: 'all 0.2s ease',
+  hover: {
+    background: '#2563eb',
+    color: '#f8fafc'
+  },
+  active: {
+    transform: 'scale(0.98)',
+    boxShadow: '0 0 0 0.2rem rgba(37, 99, 235, 0.35)'
+  },
+  touch: {
+    opacity: '0.85'
+  },
+  focus: {
+    boxShadow: '0 0 0 0.2rem rgba(59, 130, 246, 0.5)'
+  }
+});
+```
+
+> `touch` style uses a helper class for mobile-friendly press behavior.
+
+You can also use shorthand helpers:
+
+```javascript
+el('button').hoverStyle({ /* ... */ });
+el('button').activeStyle({ /* ... */ });
+el('button').touchStyle({ /* ... */ });
+```
+
+#### Animation Styles
+
+```javascript
+el('div').css({
+  animation: {
+    name: 'slide-right',
+    duration: '1s',
+    timingFunction: 'ease-out',
+    iterationCount: 'infinite',
+    fillMode: 'forwards',
+    keyframes: {
+      '0%': { transform: 'translateX(0)' },
+      '100%': { transform: 'translateX(20px)' }
+    }
+  }
+});
+```
+
+> `@keyframes` rules are created automatically when `animation.keyframes` is provided.
+
+#### Pseudo-element Styles (`before` / `after`)
+
+```javascript
+el('button').css({
+  position: 'relative',
+  padding: '16px 24px',
+  background: '#111827',
+  color: '#f9fafb',
+  borderRadius: '12px',
+  overflow: 'hidden',
+  before: {
+    content: '""',
+    position: 'absolute',
+    left: '0',
+    top: '0',
+    width: '100%',
+    height: '100%',
+    background: 'rgba(59, 130, 246, 0.2)',
+    borderRadius: '12px',
+    pointerEvents: 'none'
+  }
+});
+```
+
+> `before` and `after` are supported in object CSS styles via stylesheet rule generation.
+
+#### Custom selectors in CSS object
+
+```javascript
+el('button').css({
+  color: '#111827',
+  '&:hover::before': {
+    opacity: '1'
+  },
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    inset: '0',
+    background: 'rgba(59, 130, 246, 0.1)',
+    pointerEvents: 'none'
+  }
 });
 ```
 

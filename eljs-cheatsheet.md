@@ -31,6 +31,54 @@ document.body.appendChild(root);
 - `.style({...})` — alias for `.css()`
 - `.attr(name, value)` — set an attribute
 - `.attrRemove(name)` — remove an attribute
+
+## Advanced CSS object styles
+- `.css({ ... })` can apply normal styles and generate stylesheet rules for selectors.
+- Supported pseudo-state and pseudo-element keys:
+  - `hover`, `active`, `focus`, `touch`
+  - `before`, `after`
+  - `&:hover`, `&:active`, `&::before`, `&::after`, custom selector suffixes
+- `touch` also attaches mobile-friendly active state listeners automatically.
+- `animation` object support auto-creates `@keyframes` rules and sets the animation property.
+- Animation object fields:
+  - `name`, `duration`, `timingFunction`, `delay`, `iterationCount`, `direction`, `fillMode`, `playState`
+  - `keyframes` as nested percentage/frame objects
+
+Example:
+```js
+el('button').css({
+  position: 'relative',
+  padding: '14px 22px',
+  background: '#111827',
+  color: '#fff',
+  borderRadius: '14px',
+  overflow: 'hidden',
+  before: {
+    content: '""',
+    position: 'absolute',
+    inset: '0',
+    background: 'rgba(59,130,246,0.18)',
+    pointerEvents: 'none'
+  },
+  hover: {
+    transform: 'scale(1.02)'
+  },
+  animation: {
+    name: 'pulse',
+    duration: '2s',
+    iterationCount: 'infinite',
+    keyframes: {
+      '0%': { transform: 'scale(1)' },
+      '50%': { transform: 'scale(1.03)' },
+      '100%': { transform: 'scale(1)' }
+    }
+  }
+});
+```
+- `.hoverStyle(styles)` — shorthand for `.css({ hover: styles })`
+- `.activeStyle(styles)` — shorthand for `.css({ active: styles })`
+- `.touchStyle(styles)` — shorthand for `.css({ touch: styles })`
+- `.animation(styles)` — shorthand for `.css({ animation: styles })` or `.css('animation', value)`
 - `.data(name, value)` — set a `data-*` attribute
 - `.aria(name, value)` — set an `aria-*` attribute
 - `.class('a b')` — add classes
